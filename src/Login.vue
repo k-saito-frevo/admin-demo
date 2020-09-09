@@ -15,7 +15,7 @@
                   <v-text-field prepend-icon="mdi-account-circle" label="ユーザ名" />
                   <v-text-field v-bind:type="showPwd ? 'text' : 'password'" prepend-icon="mdi-lock" append-icon="mdi-eye-off" label="パスワード" @click:append="showPwd = !showPwd"/>
                   <v-card-actions :class='$style.center'>
-                    <v-btn class="light-green" to="/pages/operation/temperature" :class="$style.routerLink" style="color:white;font-size:18px; width:100%">
+                    <v-btn class="light-green" to="/operation/temperature" :class="$style.routerLink" style="color:white;font-size:18px; width:100%">
                       ログイン
                     </v-btn>
                   </v-card-actions>
