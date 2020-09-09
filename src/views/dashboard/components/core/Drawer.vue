@@ -12,10 +12,7 @@
     v-bind="$attrs"
   >
     <template v-slot:img="props">
-      <v-img
-        :gradient="`to bottom, ${barColor}`"
-        v-bind="props"
-      />
+      <v-img :gradient="`to bottom, ${barColor}`" v-bind="props"/>
     </template>
 
     <v-divider class="mb-1" />

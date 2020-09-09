@@ -1,14 +1,30 @@
 <template>
   <v-container id="usermaster" fluid tag="section">
-    <base-material-card icon="mdi-account" class="px-5 py-3">
+    <base-material-card icon="mdi-card-account-details-outline" class="px-5 py-3">
+      <v-data-table :headers="headers"
+                :items="items"
+                :options.sync="options"
+                :server-items-length="total"
+                :footer-props="{
+                  'items-per-page-options': [10, 20, 50, 100, 200, 300, 400, 500],
+                  showFirstLastPage: true,
+                }"
+                :loading="loading"
+                multi-sort
+                locale="ja-jp"
+                loading-text="読込中"
+                no-data-text="データがありません。"
+                class="elevation-1">
+                <template v-slot:item.name="{ item }">
+                  {{ item.name }}
+                </template>                
+    </v-data-table>
       <v-simple-table>
         <thead>
           <tr>
             <th class="primary--text">ID</th>
             <th class="primary--text">氏名</th>
             <th class="primary--text">支店</th>
-            <th class="primary--text"></th>
-            <th class="text-right primary--text">Salary</th>
           </tr>
         </thead>
         <tbody>
@@ -16,30 +32,18 @@
             <td>1</td>
             <td>Dakota Rice</td>
             <td>Niger</td>
-            <td>Oud-Turnhout</td>
-            <td class="text-right">
-              $36,738
-            </td>
           </tr>
 
           <tr>
             <td>2</td>
             <td>Minverva Hooper</td>
             <td>Curaçao</td>
-            <td>Sinaas-Waas</td>
-            <td class="text-right">
-              $23,789
-            </td>
           </tr>
 
           <tr>
             <td>3</td>
             <td>Sage Rodriguez</td>
             <td>Netherlands</td>
-            <td>Baileux</td>
-            <td class="text-right">
-              $56,142
-            </td>
           </tr>
 
           <tr>
@@ -49,26 +53,6 @@
             <td>Overland Park</td>
             <td class="text-right">
               $38,735
-            </td>
-          </tr>
-
-          <tr>
-            <td>5</td>
-            <td>Doris Greene</td>
-            <td>Malawi</td>
-            <td>Feldkirchen in Kärnten</td>
-            <td class="text-right">
-              $63,542
-            </td>
-          </tr>
-
-          <tr>
-            <td>6</td>
-            <td>Mason Porter</td>
-            <td>Chile</td>
-            <td>Gloucester</td>
-            <td class="text-right">
-              $78,615
             </td>
           </tr>
         </tbody>
@@ -82,7 +66,11 @@
     name: 'UserMaster',
 
     data: () => ({
-
-    })
+        headers:[""],
+        items:[],
+    }),
+    computed: function(){
+        this.items=[{id:1,name:"test",branchName:"東京支店"}]
+    }
   }
 </script>

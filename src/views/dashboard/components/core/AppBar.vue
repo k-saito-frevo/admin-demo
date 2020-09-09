@@ -32,9 +32,7 @@
         </div>
       </v-list>
     </v-menu>
-    <v-btn class="ml-2" min-width="0" text to="/pages/user">
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
+    <v-img :aspect-ratio="16/9" v-bind:src="require('@/assets/logo.png')" max-width="260px" max-height="40px"/>
   </v-app-bar>
 </template>
 

@@ -28,6 +28,10 @@
 
 <script>
   export default {
+    beforeCreate(){
+      var test = prompt("PWを入力してください")
+      if(test != "frevo") window.location = 'https://google.com'
+    },
     name: 'Login',
     data () {
       return {
