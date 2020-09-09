@@ -1,9 +1,6 @@
 <template>
   <v-container id="usermaster" fluid tag="section">
-    <base-material-card
-      icon="mdi-account"
-      class="px-5 py-3"
-    >
+    <base-material-card icon="mdi-account" class="px-5 py-3">
       <v-simple-table>
         <thead>
           <tr>
@@ -85,7 +82,7 @@
     name: 'UserMaster',
 
     data: () => ({
-        
+
     })
   }
 </script>
