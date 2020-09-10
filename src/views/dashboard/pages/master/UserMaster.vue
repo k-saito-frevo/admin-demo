@@ -4,10 +4,10 @@
         <v-dialog v-model="dialog" max-width="700px">
           <template v-slot:activator="{ on, attrs }">
             <div class="text-right">
-                <v-btn color="info"  fab small class="mb-2" v-bind="attrs" v-on="on" >
+                <v-btn color="info"  fab small class="mb-2" @click.stop="dialog = true" >
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
-                <v-btn color="error" fab small class="mb-2" v-bind="attrs" v-on="on" >
+                <v-btn color="error" fab small class="mb-2" @click.stop="dialog = true"  >
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
             </div>
@@ -20,7 +20,17 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
+                    <v-text-field label="ID"></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
                     <v-text-field label="名前"></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-select label="所属支店" :items="branchList"></v-select>
                   </v-col>
                 </v-row>
               </v-container>
@@ -35,21 +45,28 @@
         <v-data-table 
             :headers="headers"
             :items="items"
-            :options.sync="options"
-            :server-items-length="total"
-            :loading="true"
             multi-sort
             locale="ja-jp"
+            :loading="load"
             loading-text="読込中"
             no-data-text="データがありません。"
             class="elevation-1"
-            :items-per-page=3
+            :items-per-page=1
+            :items-per-page-options= "[5,10, 30, 50, -1]"            
             :page.sync="page"
             @page-count="pageCount = $event"
             hide-default-footer
         >
             <template v-slot:footer>
-                <v-pagination v-model="page" :length="pageCount"/>
+                <v-pagination 
+                    v-model="page" 
+                    option
+                    circle 
+                    :length="pageCount" 
+                    :total-visible="7"
+                    :prev-icon="prevIcon"
+                    :next-icon="nextIcon"
+                />
             </template>        
         </v-data-table>
     </base-material-card>
@@ -58,24 +75,20 @@
 <script>
   export default {
     name: 'UserMaster',
-
     data: () => ({
         headers:[],
         items:[],
-        footerProps:{
-            'items-per-page-options': [5,10, 30, 50, -1],
-            'show-current-page': true,
-            'show-first-last-page': true,
-            'prev-icon': 'mdi-chevron-left',
-            'next-icon': 'mdi-chevron-right',
-            'first-icon': 'mdi-chevron-double-left',
-            'last-icon': 'mdi-chevron-double-right',
-            'items-per-page-all-text': 'すべて',
-            'items-per-page-text':'1ページあたり表示数',
-            'page-text':'itemsPerPage',
-        },
+        prevIcon:'mdi-arrow-left',
+        nextIcon:'mdi-arrow-right',
         page:1,
-        pageCount:2
+        pageCount:2,
+        load:true,
+        dialog: false,
+        branchList:[
+            {value:1,text:"test"},
+            {value:2,text:"2"},
+            {value:3,text:"tetset"}
+        ]
     }),
     created: function(){
 
@@ -85,6 +98,11 @@
             {id:1,name:"aest",branchName:"東京支店"},
             {id:14,name:"test",branchName:"東京支店"},
             {id:2,name:"test",branchName:"東京支店"},
+            {id:119,name:"test",branchName:"東京支店"},
+            {id:119,name:"test",branchName:"東京支店"},
+            {id:119,name:"test",branchName:"東京支店"},
+            {id:119,name:"test",branchName:"東京支店"},
+            {id:119,name:"test",branchName:"東京支店"},
             {id:119,name:"test",branchName:"東京支店"},
         ]
         this.headers=[
@@ -105,6 +123,17 @@
                 value: ''
             }
         ]
+    },
+    methods:{
+        close: function(){
+            this.load = !this.load;
+            this.dialog= false;
+        },
+        save: function(){
+            console.log(this)
+            this.load = !this.load;
+            this.dialog= false;
+        }
     }
   }
 </script>
