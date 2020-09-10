@@ -74,30 +74,19 @@ export default new Router({
         },
         // Pages
         {
-          name: 'UserProfile',
-          path: '/pages/user',
-          component: () => import('@/views/dashboard/pages/UserProfile'),
-        },
-        {
           name: 'Notifications',
-          path: '/components/notifications',
+          path: '/pages/notifications',
           component: () => import('@/views/dashboard/pages/Notifications'),
         },
         {
           name: 'Icons',
-          path: '/components/icons',
+          path: '/pages/icons',
           component: () => import('@/views/dashboard/pages/Icons'),
         },
         {
           name: 'Typography',
-          path: '/components/typography',
+          path: '/pages/typography',
           component: () => import('@/views/dashboard/pages/Typography'),
-        },
-        // Tables
-        {
-          name: 'RegularTables',
-          path: '/tables/regular-tables',
-          component: () => import('@/views/dashboard/tables/RegularTables'),
         },
         // Maps
         {

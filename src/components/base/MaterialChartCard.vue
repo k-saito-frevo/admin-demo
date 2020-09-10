@@ -15,25 +15,14 @@
         style="max-height: 150px;"
       />
     </template>
-
-    <slot
-      slot="reveal-actions"
-      name="reveal-actions"
-    />
-
-    <slot />
-
-    <slot
-      slot="actions"
-      name="actions"
-    />
+    <slot slot="reveal-actions" name="reveal-actions"/><slot />
+    <slot slot="actions" name="actions"/>
   </base-material-card>
 </template>
 
 <script>
   export default {
     name: 'MaterialChartCard',
-
     inheritAttrs: false,
 
     props: {

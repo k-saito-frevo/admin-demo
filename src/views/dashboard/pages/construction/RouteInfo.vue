@@ -1,8 +1,5 @@
 <template>
   <v-container id="routeinfo" fluid tag="section">
-    <base-v-component
-      heading="経路作成"/>
-
     <v-card>
       <v-card-text class="pt-0">
         <v-row>

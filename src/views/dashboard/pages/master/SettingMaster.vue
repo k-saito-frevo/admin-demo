@@ -1,8 +1,5 @@
 <template>
-  <v-container id="dynamics" fluid tag="section">
-    <base-v-component
-      heading="設定管理"/>
-
+  <v-container id="settingmaster" fluid tag="section">
     <v-card>
       <v-card-text class="pt-0">
         <v-row>

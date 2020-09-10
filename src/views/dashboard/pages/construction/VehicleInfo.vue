@@ -1,8 +1,5 @@
 <template>
   <v-container id="vehicleinfo" fluid tag="section">
-    <base-v-component
-      heading="運搬車両情報"/>
-
     <v-card>
       <v-card-text class="pt-0">
         <v-row>

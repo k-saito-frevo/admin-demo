@@ -4,22 +4,22 @@
       <v-card width="500px" class="mx-auto mt-15">
           <div :class='[$style.loginAvatar,$style.center]'>
               <v-avatar size="60" >
-                  <v-img v-bind:src="require('@/assets/kajimaru.jpg')"/>
+                  <v-img v-bind:src="require('@/assets/frevo.png')"/>
               </v-avatar>
           </div>
           <v-card-title>
-              <div :class="$style.loginLogo">KL-WEB</div>
+              <div :class="$style.loginLogo">FW-WEB</div>
           </v-card-title>
           <v-card-text>
-              <v-form>
-                  <v-text-field prepend-icon="mdi-account-circle" label="ユーザ名" />
-                  <v-text-field v-bind:type="showPwd ? 'text' : 'password'" prepend-icon="mdi-lock" append-icon="mdi-eye-off" label="パスワード" @click:append="showPwd = !showPwd"/>
-                  <v-card-actions :class='$style.center'>
-                    <v-btn class="light-green" to="/operation/temperature" :class="$style.routerLink" style="color:white;font-size:18px; width:100%">
-                      ログイン
-                    </v-btn>
-                  </v-card-actions>
-              </v-form>
+            <v-form>
+                <v-text-field prepend-icon="mdi-account-circle" label="ユーザ名" />
+                <v-text-field v-bind:type="showPwd ? 'text' : 'password'" prepend-icon="mdi-lock" append-icon="mdi-eye-off" label="パスワード" @click:append="showPwd = !showPwd"/>
+                <v-card-actions :class='$style.center'>
+                  <v-btn class="light-green" to="/operation/temperature" :class="$style.routerLink" style="color:white;font-size:18px; width:100%">
+                    ログイン
+                  </v-btn>
+                </v-card-actions>
+            </v-form>
           </v-card-text>
       </v-card>
     </div>

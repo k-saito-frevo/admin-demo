@@ -20,7 +20,7 @@
     <v-list dense nav>
       <v-list-item>
         <v-list-item-avatar class="align-self-center" color="white" contain>
-          <v-img v-bind:src="require('@/assets/kajimaru.jpg')" max-height="30"/>
+          <v-img v-bind:src="require('@/assets/frevo.png')" max-height="30"/>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title  class="display-1"  v-text="profile.title"/>
@@ -116,7 +116,6 @@
               title:"ユーザ管理",
               icon:'mdi-card-account-details-outline',
               to:"usermaster"
-
             },
             {
               title:"支店管理",
@@ -139,16 +138,6 @@
           icon: 'mdi-view-dashboard',
           title: 'dashboard',
           to: '/dashboard',
-        },
-        {
-          icon: 'mdi-account',
-          title: 'user',
-          to: '/pages/user',
-        },
-        {
-          title: 'rtables',
-          icon: 'mdi-clipboard-outline',
-          to: '/tables/regular-tables',
         },
         {
           title: 'typography',
@@ -194,7 +183,7 @@
       profile () {
         return {
           avatar: true,
-          title: 'かじまる',
+          title: 'FrevoWorks',
         }
       },
     },
