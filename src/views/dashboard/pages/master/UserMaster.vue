@@ -2,21 +2,78 @@
   <v-container id="usermaster" fluid tag="section">
     <base-material-card icon="mdi-card-account-details-outline" class="px-5 py-3">
         <div class="text-right">
-            <v-btn v-if="!rowSelected" color="info"  fab small class="mb-2" @click="openAddForm" >
-                <v-icon>mdi-plus</v-icon>
-            </v-btn>
-            <v-btn v-else-if="rowSelected" color="success"  fab small class="mb-2" @click="openEditForm" >
-                <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn color="error" :disabled="selectedRowInfo.length==0" fab small class="mb-2" @click="openDelForm"  >
-                <v-icon>mdi-delete</v-icon>
-            </v-btn>
+        <v-spacer></v-spacer>
+        <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn  color="warning"  fab small class="mb-2 ml-5" @click="openCsvDialog"  v-bind="attrs" v-on="on">
+                    <v-icon>mdi-file-document-outline</v-icon>
+                </v-btn>
+            </template>
+            <span>CSV</span>
+        </v-tooltip>
+        <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn v-if="!rowSelected" color="info"  fab small class="mb-2" @click="openAddForm" v-bind="attrs" v-on="on">
+                    <v-icon>mdi-plus</v-icon>
+                </v-btn>
+                <v-btn v-else-if="rowSelected" color="success"  fab small class="mb-2" @click="openEditForm" v-bind="attrs" v-on="on">
+                    <v-icon>mdi-pencil</v-icon>
+                </v-btn>                
+            </template>
+            <span v-if="!rowSelected">追加</span>
+            <span v-else-if="rowSelected">編集</span>
+        </v-tooltip>
+        <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">         
+                <v-btn color="error" :disabled="selectedRowInfo.length==0" fab small class="mb-2" @click="openDelForm" v-bind="attrs" v-on="on">
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </template>
+            <span>削除</span>
+        </v-tooltip>
         </div>
         <v-dialog v-model="dialog" max-width="600px">
-            
           <template v-slot:activator="{on,attrs}">
           </template>
-            <v-card v-if="!del">
+            <v-card v-if="csv">
+                <v-form>
+                    <v-card-title>
+                        <span class="headline">CSV</span>
+                    </v-card-title>
+                    <v-card-text class="ml-5">
+                    <v-tabs v-model="csvTab" style="width:100%">
+                        <v-tab href="#0">アップロード</v-tab>
+                        <v-tab href="#1">ダウンロード</v-tab>
+                    </v-tabs>
+                    <v-container>
+                        <v-tabs-items v-model="csvTab">
+                            <v-tab-item value="0">
+                                <v-row>
+                                <v-col cols="11" sm="8" md="8">
+                                    <v-file-input label="CSVファイルを選択してください" v-model="targetUploadCSV"></v-file-input>
+                                </v-col>
+                                <v-col cols="1">
+                                    <v-btn class="info" @click="uploadCsv"><v-icon>mdi-cloud-upload</v-icon>アップロード</v-btn>
+                                </v-col>
+                                </v-row>                                
+                            </v-tab-item>
+                            <v-tab-item value="1">
+                                <v-row>
+                                <v-col cols="11" sm="8" md="8">
+                                    <v-btn class="info" @click="downloadCsv"><v-icon>mdi-cloud-download</v-icon>ダウンロード</v-btn>
+                                </v-col>
+                                </v-row>                                
+                            </v-tab-item>
+                        </v-tabs-items>                    
+                    </v-container>
+                    </v-card-text>
+                    <v-card-actions >
+                    <v-spacer></v-spacer>
+                    <v-btn  @click="cansel">キャンセル</v-btn>
+                    </v-card-actions>
+                </v-form>
+            </v-card>
+            <v-card v-else-if="!del">
                 <v-form>
                     <v-card-title>
                     <span class="headline" v-if="add">ユーザ追加</span>
@@ -137,6 +194,9 @@
             {value:9,text:"tetset"},
             {value:100,text:"tetset"}
         ],
+        csv:false,
+        csvTab:0,
+        targetUploadCSV:0,
         add:false,
         edit:false,
         del:false,
@@ -173,22 +233,37 @@
         //ボタン制御
         btnFlg(trueKey){
             switch(trueKey){
+                case "csv":
+                    this.csv = true
+                    this.add = false
+                    this.edit = false
+                    this.del = false
+                    break
                 case "add":
+                    this.csv = false
                     this.add = true
                     this.edit = false
                     this.del = false
                     break
                 case "edit":
+                    this.csv = false
                     this.add = false
                     this.edit = true
                     this.del = false
                     break
                 case "del":
+                    this.csv = false
                     this.add = false
                     this.edit = false
                     this.del = true
                     break
             }                    
+        },
+        //CSVダイアログボタン
+        openCsvDialog(){
+            this.csvTab = 0
+            this.btnFlg("csv")
+            this.dialog = true
         },
         //追加ボタン
         openAddForm(){
@@ -247,6 +322,43 @@
             this.selectedRow = false
             this.dialog= false;  
         },
+        //アップロードCSV
+        uploadCsv(){
+            this.getFileContent(this.targetUploadCSV)
+        },
+        //ファイル内容を出力
+        async getFileContent (file) {
+            try {
+                const content = await this.readFileAsync(file)
+                console.log(content)
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        //ファイル内容読み込み
+        readFileAsync (file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader()
+                reader.onload = () => {
+                resolve(reader.result)
+                }
+                reader.onerror = reject
+                reader.readAsText(file)
+            })
+        },
+        //ダウンロードCSV
+        downloadCsv(){
+            var csv = '\ufeff' + '従業員番号,氏名,支店番号,支店\n'
+            this.items.forEach(item => {
+                var line = item['id'] + ',' + item['name'] + ',' + item['branchId'] + ',' + item['branchName'] + '\n'
+                csv += line
+            })
+            let blob = new Blob([csv], { type: 'text/csv' })
+            let link = document.createElement('a')
+            link.href = window.URL.createObjectURL(blob)
+            link.download = 'test.csv'
+            link.click()            
+        },
         //ダイアログの初期化
         initDialog(){
             this.textId = ""
@@ -267,7 +379,8 @@
         //選択行をIDでフィルター
         filterSelectedRowInfoById(item){
             return this.selectedRowInfo.filter(target => target.id == item.id).length>0
-        }
+        },
+        
     }
   }
 </script>
