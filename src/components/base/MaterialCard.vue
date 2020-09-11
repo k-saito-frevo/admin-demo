@@ -5,8 +5,7 @@
     class="v-card--material pa-3"
   >
     <div class="d-flex grow flex-wrap">
-      <v-avatar
-        v-if="avatar"
+      <v-avatar v-if="avatar"
         size="128"
         class="mx-auto v-card--material__avatar elevation-6"
         color="grey"
@@ -14,8 +13,7 @@
         <v-img :src="avatar" />
       </v-avatar>
 
-      <v-sheet
-        v-else
+      <v-sheet v-else
         :class="{
           'pa-7': !$slots.image
         }"

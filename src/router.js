@@ -92,7 +92,7 @@ export default new Router({
         {
           name: 'GoogleMaps',
           path: '/maps/google-maps',
-          component: () => import('@/views/dashboard/maps/GoogleMaps'),
+          component: () => import('@/views/dashboard/pages/GoogleMaps'),
         },     
       ],
     },    
