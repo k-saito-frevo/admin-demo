@@ -319,6 +319,7 @@
             if( place !=-1 ) {
                 this.items.shift(place,1)
             }
+            this.selectedRowInfo.splice(0)
             this.selectedRow = false
             this.dialog= false;  
         },
