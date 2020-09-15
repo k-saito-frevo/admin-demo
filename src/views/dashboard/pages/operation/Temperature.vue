@@ -11,13 +11,48 @@
                     <v-card-text class="ml-5">
                     <v-container>
                       <div >
-                        <line-chart :chart-data="data" :option="option" :width="120" :height="60"> </line-chart>
+                        <line-chart :chart-data="data" :options="options" width="40" height="10" class="mb-5"> </line-chart>
+                        <v-data-table
+                          :headers="graphHeaders"
+                          :items="graphItems"
+                          multi-sort
+                          locale="ja-jp"
+                          :loading="load"
+                          loading-text="読込中"
+                          no-data-text="データがありません。"
+                          class="elevation-1 mb-5"
+                          :items-per-page=10
+                          :items-per-page-options= "[5,10, 30, 50, -1]"            
+                          @page-count="pageCount = $event"
+                          hide-default-footer
+                        >
+                        <template v-slot:item="{item}">
+                          <tr>
+                              <td>{{item.id}}</td>
+                              <td>{{item.number}}</td>
+                              <td>{{item.time}}</td>
+                              <td>{{item.temperature}}</td>
+                          </tr>
+                        </template>        
+                        <template v-slot:footer>
+                            <v-pagination 
+                                v-model="page" 
+                                option
+                                circle 
+                                :length="pageCount" 
+                                :total-visible="7"
+                                :prev-icon="prevIcon"
+                                :next-icon="nextIcon"
+                            />
+                        </template>        
+                      </v-data-table>
                       </div>
                     </v-container>
                     </v-card-text>
                     <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn  @click="closeDialog">閉じる</v-btn>
+                    <v-card-footer absolute>
+                        <v-btn  @click="closeDialog">閉じる</v-btn>
+                    </v-card-footer>
                     </v-card-actions>
                 </v-form>
             </v-card>
@@ -25,9 +60,8 @@
       <base-material-card icon="mdi-coolant-temperature" class="px-5 py-3">
       <v-menu
         ref="menu"
-        v-model="menu"
         :close-on-content-click="false"
-        :return-value.sync="date"
+        :return-value.sync="targetYM"
         transition="scale-transition"
         offset-y
         min-width="290px">
@@ -43,7 +77,7 @@
         </template>
         <v-date-picker locale="ja" v-model="targetYM" type="month" no-title scrollable>
           <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+          <v-btn text color="primary" @click="$refs.menu.save(targetYM)">OK</v-btn>
         </v-date-picker>
       </v-menu>
             
@@ -113,11 +147,35 @@
           {text:"温度推移グラフ",value:""},
         ],
         items:[],
+        graphHeaders:[
+          {text:"ID",value:"id"},
+          {text:"デバイスID",value:"number"},
+          {text:"受信時刻",value:"time"},
+          {text:"温度",value:"temperature"},
+        ],
+        graphItems:[
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:00:00",temperature:85},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:05:00",temperature:70},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:10:00",temperature:60},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:15:00",temperature:50},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:20:00",temperature:40},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:25:00",temperature:30},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:30:00",temperature:20},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:35:00",temperature:10},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:40:00",temperature:5},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:45:00",temperature:0},
+          {id:"1-23",number:"12-34",time:"2020/09/14 08:50:00",temperature:45},
+        ],
         targetYM:"",
         prevIcon:'mdi-arrow-left',
         nextIcon:'mdi-arrow-right',
         page:1,
         pageCount:2,
+        pagination: {
+                sortBy: 'time',
+                descending: true,
+                rowsPerPage: -1,
+        },
         load:false,
         dialog: false,
         datacollection: null,
@@ -125,30 +183,26 @@
           labels : ["08:00", "08:05", "08:10", "08:15", "08:20","08:25","08:30","08:35","08:40","08:45","08:50"],
           datasets:[
             {
+              width:"80%",
+              height:"120px",
               fill:false,
-              borderWidth:8,
+              borderColor:"offwhite",
+              borderWidth:5,
+              pointHoverBorderWidth:7,
               label:"",
-              width:"100%",
-              height:"50%",
-              backgroundColor:"#1F1F1F",
-              lineColor:"#1F1F1F",
-              fillColor : "#2F2F2F",
-              strokeColor : "#3F3F3F",
-              // borderColor:[],
-              // pointBackgroundColor : [],
-              //pointStrokeColor : "#e74c3c",
+              pointRadius:7,
+              pointBackgroundColor:[],
+              pointBorderColor:[],
+              pointBorderWidth:3,
               data : [85,70,60,50,40,30,20,10,5,0,45],
-              scales:{
-                yAxes: [{
-                    display: true,
-                    ticks: {beginAtZero: true}
-                }]
-              },
             }
           ]
         },
-        option:{
-
+        options:{
+          scaleLabel:"時刻",
+          legend: {
+            display: false
+          },
         },
 
     }),
@@ -163,12 +217,10 @@
       }
     },
     mounted () {
-      this.fillData()
-      // this.data.datasets[0].pointBackgroundColor=[]
-      // this.data.datasets[0].data.forEach(item =>{
-      //   this.data.datasets[0].pointBackgroundColor.push(this.setThermographyColorCode(item))
-      //   this.data.datasets[0].borderColor.push(this.setThermographyColorCode(item))
-      // })
+      this.data.datasets[0].data.forEach(item =>{
+        this.data.datasets[0].pointBorderColor.push(this.setThermographyColorCode(item))
+        this.data.datasets[0].pointBackgroundColor.push("#FFFFFF")
+      })
     },
     methods: {
       //温度に応じたカラーコードをセット
@@ -197,6 +249,7 @@
           return "#e74c3c"          
         }
       },
+      //ダイアログを開く
       openDialog(){
         this.dialog = true;
       },
@@ -204,27 +257,6 @@
         this.dialog = false;
         document.getElementsByClassName('v-dialog--active')[0].scrollTop = 0
       },
-      fillData () {
-        console.log(this.datacollection)
-        this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }
-          ]
-        }
-        console.log(this.datacollection)
-      },
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      }
     }
   }
 </script>

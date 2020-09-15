@@ -79,11 +79,6 @@ export default new Router({
           component: () => import('@/views/dashboard/pages/Notifications'),
         },
         {
-          name: 'Icons',
-          path: '/pages/icons',
-          component: () => import('@/views/dashboard/pages/Icons'),
-        },
-        {
           name: 'Typography',
           path: '/pages/typography',
           component: () => import('@/views/dashboard/pages/Typography'),

@@ -144,11 +144,6 @@
           to: '/pages/typography',
         },
         {
-          title: 'icons',
-          icon: 'mdi-chart-bubble',
-          to: '/pages/icons',
-        },
-        {
           title: 'google',
           icon: 'mdi-map-marker',
           to: '/maps/google-maps',
