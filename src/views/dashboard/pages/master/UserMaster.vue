@@ -173,7 +173,11 @@
   export default {
     name: 'UserMaster',
     data: () => ({
-        headers:[],
+        headers:[
+            {text: '従業員番号',value: 'id'},
+            {text: '氏名',value: 'name'},
+            {text: '所属支店',value: 'branchName'},
+        ],
         items:[],
         prevIcon:'mdi-arrow-left',
         nextIcon:'mdi-arrow-right',
@@ -210,11 +214,6 @@
         limit_length: value => value.length <= 10 || "10文字以内で入力してください" // 文字数の制約        
     }),
     created: function(){
-        this.headers=[
-            {text: '従業員番号',value: 'id'},
-            {text: '氏名',value: 'name'},
-            {text: '所属支店',value: 'branchName'},
-        ]
         this.items=[
             {id:1,name:"test",branchId:1,branchName:"東京支店"},
             {id:2,name:"tes",branchId:1,branchName:"東京支店"},
@@ -380,8 +379,7 @@
         //選択行をIDでフィルター
         filterSelectedRowInfoById(item){
             return this.selectedRowInfo.filter(target => target.id == item.id).length>0
-        },
-        
+        },   
     }
   }
 </script>

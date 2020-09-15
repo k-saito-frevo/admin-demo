@@ -1,420 +1,233 @@
 <template>
   <v-container id="temperature" fluid tag="section">
-    <v-card>
-      <v-card-text class="pt-0">
-        <v-row>
-          <v-col cols="12" md="6">
-            <base-subheading>
-              <h5 class="font-weight-light">
-                Pick your Color
-              </h5>
-            </base-subheading>
-
-            <div>
-              <v-btn
-                v-for="(color, i) in colors"
-                :key="i"
-                elevation="1"
-                :color="color === 'default' ? undefined : color"
-                class="ma-1"
-              >
-                {{ color }}
-              </v-btn>
-            </div>
-          </v-col>
-
-          <v-col
-            class="pt-0"
-            cols="12"
-            md="6"
-          >
-            <base-subheading>
-              <h5 class="font-weight-light">
-                Buttons with Label
-              </h5>
-            </base-subheading>
-
-            <div>
-              <v-btn
-                v-for="(dir, i) in ['left', 'right']"
-                :key="i"
-                elevation="1"
-                class="ma-1"
-              >
-                <v-icon
-                  :left="dir === 'left'"
-                  :right="dir === 'right'"
-                  :class="dir === 'right' && 'order-last'"
-                  v-text="icons[dir]"
-                />
-                {{ dir }}
-              </v-btn>
-
-              <v-btn
-                v-for="(color, i) in colors.slice(2)"
-                :key="`btn-${i}`"
-                elevation="1"
-                :color="color === 'default' ? undefined : color"
-                class="ma-1"
-              >
-                <v-icon
-                  left
-                  v-text="icons[color]"
-                />
-                {{ color }}
-              </v-btn>
-            </div>
-          </v-col>
-
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <base-subheading>
-              <h5 class="font-weight-light">
-                Pick your Size
-              </h5>
-            </base-subheading>
-
-            <v-btn
-              v-for="n in 3"
-              :key="n"
-              elevation="1"
-              :small="n === 1"
-              :large="n === 3"
-              class="ma-1"
-              color="secondary"
-            >
-              {{ n === 1 ? 'small' : n === 2 ? 'regular' : 'large' }}
-            </v-btn>
-          </v-col>
-
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <base-subheading>
-              <h5 class="font-weight-light">
-                Pick your Style
-              </h5>
-            </base-subheading>
-
-            <v-btn
-              class="ma-1"
-              color="secondary"
-            >
-              Default
-            </v-btn>
-
-            <v-btn
-              class="ma-1"
-              elevation="1"
-              color="secondary"
-              rounded
-            >
-              Rounded
-            </v-btn>
-
-            <v-btn
-              class="ma-1"
-              color="secondary"
-              elevation="1"
-              rounded
-            >
-              <v-icon left>
-                mdi-heart
-              </v-icon>
-              With Icon
-            </v-btn>
-
-            <v-btn
-              class="ma-1"
-              color="secondary"
-              elevation="1"
-              fab
-              small
-            >
-              <v-icon>
-                mdi-heart
-              </v-icon>
-            </v-btn>
-
-            <v-btn
-              class="ma-1"
-              color="secondary"
-              text
-            >
-              Simple
-            </v-btn>
-          </v-col>
-
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <base-subheading>
-              <h5 class="font-weight-light">
-                Pagination
-              </h5>
-            </base-subheading>
-
-            <v-pagination
-              :length="5"
-              :value="1"
-              circle
-              class="justify-start"
-            />
-
-            <v-pagination
-              :length="3"
-              :value="2"
-              circle
-              class="justify-start"
-              next-icon="mdi-menu-right"
-              prev-icon="mdi-menu-left"
-            />
-          </v-col>
-
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <base-subheading>
-              <h5 class="font-weight-light">
-                Button Group
-              </h5>
-            </base-subheading>
-
-            <v-sheet>
-              <v-btn-toggle color="teal">
-                <v-btn
-                  v-for="dir in ['left', 'middle', 'right']"
-                  :key="dir"
-                >
-                  {{ dir }}
-                </v-btn>
-              </v-btn-toggle>
-            </v-sheet>
-
-            <div class="my-6" />
-
-            <v-btn-toggle
-              color="teal"
-              rounded
-            >
-              <v-btn
-                v-for="n in 4"
-                :key="n"
-              >
-                {{ n }}
-              </v-btn>
-            </v-btn-toggle>
-
-            <div class="my-2" />
-
-            <v-btn-toggle
-              color="teal"
-              rounded
-            >
-              <v-btn
-                v-for="n in 3"
-                :key="n"
-              >
-                {{ n + 4 }}
-              </v-btn>
-            </v-btn-toggle>
-          </v-col>
-
-          <template v-for="(s, i) in social">
-            <v-col
-              :key="i"
-              cols="12"
-              class="py-1"
-            >
-              <base-subheading
-                v-if="i === 0"
-                :key="`heading-${i}`"
-              >
-                <h5 class="font-weight-light">
-                  Social buttons
-                </h5>
-              </base-subheading>
-
-              <v-row dense>
-                <v-col
-                  cols="auto"
-                  md="4"
-                  sm="5"
-                >
-                  <v-btn
-                    elevation="1"
-                    :color="s.color"
-                    dark
-                  >
-                    <v-icon
-                      left
-                      v-text="s.icon"
-                    />
-                    {{ s.text }}
-                  </v-btn>
-                </v-col>
-
-                <v-col
-                  cols="auto"
-                  md="1"
-                  sm="1"
-                >
-                  <v-btn
-                    elevation="1"
-                    :color="s.color"
-                    dark
-                    min-width="0"
-                    max-width="41"
-                  >
-                    <v-icon v-text="s.icon" />
-                  </v-btn>
-                </v-col>
-
-                <v-col
-                  cols="auto"
-                  md="1"
-                  sm="1"
-                >
-                  <v-btn
-                    elevation="1"
-                    :color="s.color"
-                    dark
-                    fab
-                    min-width="0"
-                    small
-                  >
-                    <v-icon v-text="s.icon" />
-                  </v-btn>
-                </v-col>
-
-                <v-col
-                  cols="auto"
-                  md="1"
-                  sm="1"
-                >
-                  <v-btn
-                    :color="s.color"
-                    dark
-                    icon
-                    min-width="0"
-                  >
-                    <v-icon
-                      :color="s.color"
-                      v-text="s.icon"
-                    />
-                  </v-btn>
-                </v-col>
-
-                <v-col
-                  cols="auto"
-                  md="3"
-                  sm="4"
-                >
-                  <v-btn
-                    :color="s.color"
-                    dark
-                    text
-                  >
-                    <v-icon
-                      left
-                      :color="s.color"
-                      v-text="s.icon"
-                    />
-                    {{ s.text }}
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
+  <v-dialog v-model="dialog" max-width="80%" max-height="50%">
+          <template v-slot:activator="{on,attrs}">
           </template>
-        </v-row>
-      </v-card-text>
-    </v-card>
+            <v-card>
+                <v-form>
+                    <v-card-title>
+                    <span class="headline">9/12 工事A　車両A</span>
+                    </v-card-title>
+                    <v-card-text class="ml-5">
+                    <v-container>
+                      <div >
+                        <line-chart :chart-data="data" :option="option" :width="120" :height="60"> </line-chart>
+                      </div>
+                    </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn  @click="closeDialog">閉じる</v-btn>
+                    </v-card-actions>
+                </v-form>
+            </v-card>
+        </v-dialog>    
+      <base-material-card icon="mdi-coolant-temperature" class="px-5 py-3">
+      <v-menu
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        :return-value.sync="date"
+        transition="scale-transition"
+        offset-y
+        min-width="290px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field v-model="targetYM"
+            :value="computedDateFormattedMomentjs"
+            label="対象年月"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+            style="width:260px"></v-text-field>
+        </template>
+        <v-date-picker locale="ja" v-model="targetYM" type="month" no-title scrollable>
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+        </v-date-picker>
+      </v-menu>
+            
+        <v-data-table
+            :headers="headers"
+            :items="items"
+            multi-sort
+            locale="ja-jp"
+            :loading="load"
+            loading-text="読込中"
+            no-data-text="データがありません。"
+            class="elevation-1"
+            :items-per-page=5
+            :items-per-page-options= "[5,10, 30, 50, -1]"            
+            :page.sync="page"
+            @page-count="pageCount = $event"
+            hide-default-footer
+        >
+          <template v-slot:item="{item}">
+            <tr>
+                <td>{{item.date}}</td>
+                <td>{{item.linkedDeviceId}}</td>
+                <td>{{item.linkedVehicleNumber}}</td>
+                <td>{{item.linkedDriverName}}</td>
+                <td>{{item.departureTime}}</td>
+                <td>{{item.departureTemperature}}</td>
+                <td>{{item.arrivalTime}}</td>
+                <td>{{item.latestTemperature}}</td>
+                <td><v-btn class="warning" small @click="openDialog">
+                  <v-icon>mdi-chart-areaspline</v-icon>表示
+                  </v-btn>
+                </td>
+            </tr>
+          </template>        
+          <template v-slot:footer>
+              <v-pagination 
+                  v-model="page" 
+                  option
+                  circle 
+                  :length="pageCount" 
+                  :total-visible="7"
+                  :prev-icon="prevIcon"
+                  :next-icon="nextIcon"
+              />
+          </template>        
+        </v-data-table>
+    </base-material-card>    
   </v-container>
 </template>
 
 <script>
+  import LineChart from '../../../../components/base/LineChart'
+  import { VMonthPicker } from 'v-month-picker';  
   export default {
     name: 'Temperature',
+    components:{LineChart,VMonthPicker},
+    data: ()=> ({
+        headers:[
+          {text:"日付",value:"date"},
+          {text:"デバイスID",value:"linkedDeviceId"},
+          {text:"車両ナンバー",value:"linkedVehicleNumber"},
+          {text:"運転手名",value:"linkedDriverName"},
+          {text:"出荷時刻",value:"departureTime"},
+          {text:"出荷温度（℃)",value:"departureTemperature"},
+          {text:"到着時刻",value:"arrivalTime"},
+          {text:"最新温度（℃)",value:"latestTemperature"},
+          {text:"温度推移グラフ",value:""},
+        ],
+        items:[],
+        targetYM:"",
+        prevIcon:'mdi-arrow-left',
+        nextIcon:'mdi-arrow-right',
+        page:1,
+        pageCount:2,
+        load:false,
+        dialog: false,
+        datacollection: null,
+      	data : {
+          labels : ["08:00", "08:05", "08:10", "08:15", "08:20","08:25","08:30","08:35","08:40","08:45","08:50"],
+          datasets:[
+            {
+              fill:false,
+              borderWidth:8,
+              label:"",
+              width:"100%",
+              height:"50%",
+              backgroundColor:"#1F1F1F",
+              lineColor:"#1F1F1F",
+              fillColor : "#2F2F2F",
+              strokeColor : "#3F3F3F",
+              // borderColor:[],
+              // pointBackgroundColor : [],
+              //pointStrokeColor : "#e74c3c",
+              data : [85,70,60,50,40,30,20,10,5,0,45],
+              scales:{
+                yAxes: [{
+                    display: true,
+                    ticks: {beginAtZero: true}
+                }]
+              },
+            }
+          ]
+        },
+        option:{
 
-    data: () => ({
-      colors: [
-        'default',
-        'secondary',
-        'info',
-        'success',
-        'warning',
-        'error',
-      ],
-      icons: {
-        left: 'mdi-chevron-left',
-        right: 'mdi-chevron-right',
-        info: 'mdi-exclamation',
-        success: 'mdi-check',
-        warning: 'mdi-alert',
-        error: 'mdi-close',
-      },
-      social: [
-        {
-          color: '#55ACEE',
-          icon: 'mdi-twitter',
-          text: 'Connect with Twitter',
         },
-        {
-          color: '#3B5998',
-          icon: 'mdi-facebook',
-          text: 'Share - 2.2K',
-        },
-        {
-          color: '#DD4b39',
-          icon: 'mdi-google-plus',
-          text: 'Share on Google+',
-        },
-        {
-          color: '#0976B4',
-          icon: 'mdi-linkedin',
-          text: 'Connect with LinkedIn',
-        },
-        {
-          color: '#CC2127',
-          icon: 'mdi-pinterest',
-          text: 'Pint It - 212',
-        },
-        {
-          color: '#E52D27',
-          icon: 'mdi-youtube',
-          text: 'View on Youtube',
-        },
-        {
-          color: '#35465C',
-          icon: 'mdi-tumblr',
-          text: 'Repost',
-        },
-        {
-          color: '#333333',
-          icon: 'mdi-github-circle',
-          text: 'Connect with Github',
-        },
-        {
-          color: '#1769FF',
-          icon: 'mdi-behance',
-          text: 'Follow Us',
-        },
-        {
-          color: '#EA4C89',
-          icon: 'mdi-dribbble',
-          text: 'Follow us on Dribbble',
-        },
-        {
-          color: '#FF4500',
-          icon: 'mdi-reddit',
-          text: 'Repost - 232',
-        },
-      ],
+
     }),
+    created(){
+      this.items=[
+            {date:"2020/9/13",linkedDeviceId:"1-23",linkedVehicleNumber:"12-34",linkedDriverName:"半沢　直樹",departureTime:"09:00",departureTemperature:"85",arrivalTime:"15:00",latestTemperature:"45"},
+      ]
+    },
+    computed:{
+      computedDateFormattedMomentjs () {
+        return this.date ? moment(this.date).format('dddd, MMMM Do YYYY') : ''
+      }
+    },
+    mounted () {
+      this.fillData()
+      // this.data.datasets[0].pointBackgroundColor=[]
+      // this.data.datasets[0].data.forEach(item =>{
+      //   this.data.datasets[0].pointBackgroundColor.push(this.setThermographyColorCode(item))
+      //   this.data.datasets[0].borderColor.push(this.setThermographyColorCode(item))
+      // })
+    },
+    methods: {
+      //温度に応じたカラーコードをセット
+      setThermographyColorCode(val){
+        console.log(val)
+        if(val < 10){
+          //黒
+          return "#34495e"
+        }else if(val < 20){
+          //紫
+          return "#9b59b6"
+        }else if(val < 30){
+          //青
+          return "#3498db"
+        }else if(val < 40){
+          //緑
+          return "#2ecc71"
+        }else if(val < 50){
+          //黄色
+          return "#f1c40f"
+        }else if(val < 60){
+          //オレンジ
+          return "#e67e22"
+        }else{
+          //赤
+          return "#e74c3c"          
+        }
+      },
+      openDialog(){
+        this.dialog = true;
+      },
+      closeDialog(){
+        this.dialog = false;
+        document.getElementsByClassName('v-dialog--active')[0].scrollTop = 0
+      },
+      fillData () {
+        console.log(this.datacollection)
+        this.datacollection = {
+          labels: [this.getRandomInt(), this.getRandomInt()],
+          datasets: [
+            {
+              label: 'Data One',
+              backgroundColor: '#f87979',
+              data: [this.getRandomInt(), this.getRandomInt()]
+            }, {
+              label: 'Data One',
+              backgroundColor: '#f87979',
+              data: [this.getRandomInt(), this.getRandomInt()]
+            }
+          ]
+        }
+        console.log(this.datacollection)
+      },
+      getRandomInt () {
+        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+      }
+    }
   }
 </script>
+
+<style scoped>
+</style>
