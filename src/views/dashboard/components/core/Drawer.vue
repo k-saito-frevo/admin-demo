@@ -76,36 +76,36 @@
               icon:'mdi-chart-multiple',
               to:"temperature"
             },
-            {
-              title:"動態管理",
-              icon:'mdi-crosshairs-gps',
-              to:"dynamics"
-            },
+            // {
+            //   title:"動態管理",
+            //   icon:'mdi-crosshairs-gps',
+            //   to:"dynamics"
+            // },
           ],
         },
-        {
-          title:'工事管理',
-          icon:'mdi-teach',
-          group:'/construction',
-          children:[
-            {
-              title:"工事情報",
-              icon:'mdi-pickaxe',
-              to:"constructioninfo"
+        // {
+        //   title:'工事管理',
+        //   icon:'mdi-teach',
+        //   group:'/construction',
+        //   children:[
+        //     {
+        //       title:"工事情報",
+        //       icon:'mdi-pickaxe',
+        //       to:"constructioninfo"
 
-            },
-            {
-              title:"運搬車両情報",
-              icon:'mdi-car-lifted-pickup',
-              to:"vehicleinfo"
-            },
-            {
-              title:"経路作成",
-              icon:'mdi-map-search-outline',
-              to:"routeinfo"
-            },
-          ],
-        },
+        //     },
+        //     {
+        //       title:"運搬車両情報",
+        //       icon:'mdi-car-lifted-pickup',
+        //       to:"vehicleinfo"
+        //     },
+        //     {
+        //       title:"経路作成",
+        //       icon:'mdi-map-search-outline',
+        //       to:"routeinfo"
+        //     },
+        //   ],
+        // },
         {
           title:'マスタ管理',
           icon:'mdi-hammer-screwdriver',
@@ -116,21 +116,21 @@
               icon:'mdi-card-account-details-outline',
               to:"usermaster"
             },
-            {
-              title:"支店管理",
-              icon:'mdi-domain',
-              to:"branchmaster"
-            },
-            {
-              title:"車載端末管理",
-              icon:'mdi-devices',
-              to:"devicemaster"
-            },
-            {
-              title:"設定管理",
-              icon:'mdi-cog-outline',
-              to:"settingmaster"
-            }
+            // {
+            //   title:"支店管理",
+            //   icon:'mdi-domain',
+            //   to:"branchmaster"
+            // },
+            // {
+            //   title:"車載端末管理",
+            //   icon:'mdi-devices',
+            //   to:"devicemaster"
+            // },
+            // {
+            //   title:"設定管理",
+            //   icon:'mdi-cog-outline',
+            //   to:"settingmaster"
+            // }
           ],
         },
         {
@@ -138,21 +138,21 @@
           title: 'dashboard',
           to: '/dashboard',
         },
-        {
-          title: 'typography',
-          icon: 'mdi-format-font',
-          to: '/pages/typography',
-        },
-        {
-          title: 'google',
-          icon: 'mdi-map-marker',
-          to: '/maps/google-maps',
-        },
-        {
-          title: 'notifications',
-          icon: 'mdi-bell',
-          to: '/pages/notifications',
-        },
+        // {
+        //   title: 'typography',
+        //   icon: 'mdi-format-font',
+        //   to: '/pages/typography',
+        // },
+        // {
+        //   title: 'google',
+        //   icon: 'mdi-map-marker',
+        //   to: '/maps/google-maps',
+        // },
+        // {
+        //   title: 'notifications',
+        //   icon: 'mdi-bell',
+        //   to: '/pages/notifications',
+        // },
         {
           title: 'ログアウト',
           icon: 'mdi-reply-all',

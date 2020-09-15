@@ -6,7 +6,7 @@
             <v-card>
                 <v-form>
                     <v-card-title>
-                    <span class="headline">9/12 工事A　車両A</span>
+                    <span class="headline">温度推移</span>
                     </v-card-title>
                     <v-card-text class="ml-5">
                     <v-container>
@@ -50,6 +50,7 @@
                     </v-container>
                     </v-card-text>
                     <v-card-actions>
+
                     <v-card-footer absolute>
                         <v-btn  @click="closeDialog">閉じる</v-btn>
                     </v-card-footer>
@@ -58,29 +59,28 @@
             </v-card>
         </v-dialog>    
       <base-material-card icon="mdi-coolant-temperature" class="px-5 py-3">
-      <v-menu
-        ref="menu"
-        :close-on-content-click="false"
-        :return-value.sync="targetYM"
-        transition="scale-transition"
-        offset-y
-        min-width="290px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field v-model="targetYM"
-            :value="computedDateFormattedMomentjs"
-            label="対象年月"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-            style="width:260px"></v-text-field>
-        </template>
-        <v-date-picker locale="ja" v-model="targetYM" type="month" no-title scrollable>
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="$refs.menu.save(targetYM)">OK</v-btn>
-        </v-date-picker>
-      </v-menu>
-            
+        <v-menu
+          ref="menu"
+          :close-on-content-click="false"
+          :return-value.sync="targetYM"
+          transition="scale-transition"
+          offset-y
+          min-width="290px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field v-model="targetYM"
+              :value="computedDateFormattedMomentjs"
+              label="対象年月"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+              style="width:260px"></v-text-field>
+          </template>
+          <v-date-picker locale="ja" v-model="targetYM" type="month" no-title scrollable>
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="$refs.menu.save(targetYM)">OK</v-btn>
+          </v-date-picker>
+        </v-menu> 
         <v-data-table
             :headers="headers"
             :items="items"
@@ -90,7 +90,7 @@
             loading-text="読込中"
             no-data-text="データがありません。"
             class="elevation-1"
-            :items-per-page=5
+            :items-per-page=10
             :items-per-page-options= "[5,10, 30, 50, -1]"            
             :page.sync="page"
             @page-count="pageCount = $event"
@@ -166,11 +166,11 @@
           {id:"1-23",number:"12-34",time:"2020/09/14 08:45:00",temperature:0},
           {id:"1-23",number:"12-34",time:"2020/09/14 08:50:00",temperature:45},
         ],
-        targetYM:"",
+        targetYM:"2020-09",
         prevIcon:'mdi-arrow-left',
         nextIcon:'mdi-arrow-right',
         page:1,
-        pageCount:2,
+        pageCount:1,
         pagination: {
                 sortBy: 'time',
                 descending: true,
