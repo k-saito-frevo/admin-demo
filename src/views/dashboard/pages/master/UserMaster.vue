@@ -346,7 +346,7 @@
                 branchName:ss
             }
             if( place !=-1 ) {
-                this.items[place] = inputData
+                this.items.splice(place, 1, inputData)
             }
             console.log(this.items)
             this.snackBar=true
