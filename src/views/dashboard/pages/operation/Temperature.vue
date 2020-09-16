@@ -40,7 +40,7 @@
                                 option
                                 circle 
                                 :length="pageCount" 
-                                :total-visible="7"
+                                :total-visible="10"
                                 :prev-icon="prevIcon"
                                 :next-icon="nextIcon"
                             />
@@ -49,11 +49,11 @@
                       </div>
                     </v-container>
                     </v-card-text>
-                    <v-card-actions>
-
-                    <v-card-footer absolute>
-                        <v-btn  @click="closeDialog">閉じる</v-btn>
-                    </v-card-footer>
+                    <v-card-actions >
+                    <v-spacer/>
+                    <div>
+                        <v-btn @click="closeDialog" class="warning" >閉じる</v-btn>
+                    </div>
                     </v-card-actions>
                 </v-form>
             </v-card>

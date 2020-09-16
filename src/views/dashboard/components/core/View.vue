@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    name: 'DashboardCoreView',
+    name: 'View',
     components: {
       DashboardCoreFooter: () => import('./Footer'),
     },
