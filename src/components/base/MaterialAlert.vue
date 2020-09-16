@@ -49,10 +49,8 @@
 
   .v-alert--material
     margin-top: 32px
-
     .v-alert__icon
       top: -36px
-
     .v-alert__dismissible
       align-self: flex-start
       margin: 0 !important

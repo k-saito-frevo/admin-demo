@@ -1,5 +1,26 @@
 <template>
   <v-container id="usermaster" fluid tag="section">
+    <v-snackbar
+      v-model="snackBar"
+      color="success"
+      :multi-line="true"
+      :right=true
+      :timeout="2500"
+      :top="true"
+      transition="slide-y-transition"
+    >
+        <v-icon>mdi-cloud-check-outline</v-icon>
+        <span class="ml-5 ">保存成功</span>
+        <template v-slot:action="{ attrs }">
+            <v-btn
+            text
+            v-bind="attrs"
+            @click="snackBar = false"
+            >
+            <v-icon>mdi-close</v-icon>
+            </v-btn>
+        </template>
+    </v-snackbar>
     <base-material-card icon="mdi-card-account-details-outline" class="px-5 py-3">
         <div class="text-right">
         <v-spacer></v-spacer>
@@ -210,6 +231,7 @@
         textName:"",
         selectedBranch:"",
         delTarget:{},
+        snackBar:true,
         required: value => !!value || "入力してください", // 入力必須の制約
         limit_length: value => value.length <= 10 || "10文字以内で入力してください" // 文字数の制約        
     }),

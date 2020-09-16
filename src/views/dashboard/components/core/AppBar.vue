@@ -4,7 +4,7 @@
       <v-icon v-if="value" large>mdi-view-quilt</v-icon>
       <v-icon v-else large>mdi-dots-vertical</v-icon>
     </v-btn>
-    <v-toolbar-title class="hidden-sm-and-down font-weight-light" v-text="$route.name"/>
+    <v-toolbar-title class="hidden-sm-and-down " v-text="$route.name"/>
     <v-spacer />
     <div class="mx-3" />
     <v-menu bottom left offset-y  origin="top right" transition="scale-transition">

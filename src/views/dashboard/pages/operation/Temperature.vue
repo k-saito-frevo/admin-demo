@@ -11,7 +11,7 @@
                     <v-card-text class="ml-5">
                     <v-container>
                       <div >
-                        <line-chart :chart-data="data" :options="options" width="40" height="10" class="mb-5"> </line-chart>
+                        <line-chart :chart-data="data" :options="options" width=40 height=10 class="mb-5"> </line-chart>
                         <v-data-table
                           :headers="graphHeaders"
                           :items="graphItems"
@@ -21,9 +21,9 @@
                           loading-text="読込中"
                           no-data-text="データがありません。"
                           class="elevation-1 mb-5"
-                          :items-per-page=10
-                          :items-per-page-options= "[5,10, 30, 50, -1]"            
-                          @page-count="pageCount = $event"
+                          :items-per-page=5
+                          :page.sync="transitionPage"       
+                          @page-count="transitionPageCount = $event"
                           hide-default-footer
                         >
                         <template v-slot:item="{item}">
@@ -33,13 +33,13 @@
                               <td>{{item.time}}</td>
                               <td>{{item.temperature}}</td>
                           </tr>
-                        </template>        
+                        </template> 
                         <template v-slot:footer>
                             <v-pagination 
-                                v-model="page" 
+                                v-model="transitionPage" 
                                 option
                                 circle 
-                                :length="pageCount" 
+                                :length="transitionPageCount" 
                                 :total-visible="10"
                                 :prev-icon="prevIcon"
                                 :next-icon="nextIcon"
@@ -63,9 +63,11 @@
           ref="menu"
           :close-on-content-click="false"
           :return-value.sync="targetYM"
-          transition="scale-transition"
+          transition="fab-transition"
+          offset-overflow
           offset-y
-          min-width="290px">
+          min-width="290px"
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field v-model="targetYM"
               :value="computedDateFormattedMomentjs"
@@ -74,9 +76,10 @@
               readonly
               v-bind="attrs"
               v-on="on"
-              style="width:260px"></v-text-field>
+              style="width:260px"
+              ></v-text-field>
           </template>
-          <v-date-picker locale="ja" v-model="targetYM" type="month" no-title scrollable>
+          <v-date-picker locale="ja" v-model="targetYM" @click="$refs.menu.save(targetYM)" type="month" no-title scrollable>
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="$refs.menu.save(targetYM)">OK</v-btn>
           </v-date-picker>
@@ -171,11 +174,13 @@
         nextIcon:'mdi-arrow-right',
         page:1,
         pageCount:1,
-        pagination: {
-                sortBy: 'time',
-                descending: true,
-                rowsPerPage: -1,
-        },
+        transitionPage:1,
+        transitionPageCount:1,
+        // pagination: {
+        //         sortBy: 'time',
+        //         descending: true,
+        //         rowsPerPage: -1,
+        // },
         load:false,
         dialog: false,
         datacollection: null,
@@ -222,10 +227,15 @@
         this.data.datasets[0].pointBackgroundColor.push("#FFFFFF")
       })
     },
+    filters:{
+      formatYYYYMM(val){
+        if(val.indexOf("-") <0) return val
+        return "test" 
+      }
+    },
     methods: {
       //温度に応じたカラーコードをセット
       setThermographyColorCode(val){
-        console.log(val)
         if(val < 10){
           //黒
           return "#34495e"
@@ -262,4 +272,7 @@
 </script>
 
 <style scoped>
+.v-picker{
+  margin-top:0px !important;
+}
 </style>
