@@ -106,19 +106,19 @@
                         <v-col cols="11" sm="8" md="8">
                             <v-text-field label="ID" v-model="textId" :rules="[required]"></v-text-field>
                         </v-col>
-                        <v-col cols="1" sm="1"md="1"><span class="red--text font-weight-bold">*</span></v-col>
+                        <v-col cols="1" sm="1" md="1"><span class="red--text font-weight-bold">*</span></v-col>
                         </v-row>
                         <v-row>
                         <v-col cols="11" sm="8" md="8">
                             <v-text-field label="名前" v-model="textName" :rules="[required]"></v-text-field>
                         </v-col>
-                        <v-col cols="1" sm="1"md="1"><span class="red--text font-weight-bold">*</span></v-col>
+                        <v-col cols="1" sm="1" md="1"><span class="red--text font-weight-bold">*</span></v-col>
                         </v-row>
                         <v-row>
                         <v-col cols="11" sm="8" md="8">
                             <v-select label="所属支店" :items="branchList" v-model="selectedBranch" :rules="[required]"></v-select>
                         </v-col>
-                        <v-col cols="1" sm="1"md="1"><span class="red--text font-weight-bold">*</span></v-col>
+                        <v-col cols="1" sm="1" md="1"><span class="red--text font-weight-bold">*</span></v-col>
                         </v-row>
                     </v-container>
                     </v-card-text>
@@ -231,7 +231,7 @@
         textName:"",
         selectedBranch:"",
         delTarget:{},
-        snackBar:true,
+        snackBar:false,
         required: value => !!value || "入力してください", // 入力必須の制約
         limit_length: value => value.length <= 10 || "10文字以内で入力してください" // 文字数の制約        
     }),
@@ -318,19 +318,38 @@
                 targetBranchId = target[0]["value"]
                 targetBranchName = target[0]["text"]
             }
+            
             let inputData = {
                 id: this.textId,
                 name: this.textName,
-                branchId:targetBranchId,
+                branchId:this.selectedBranch,
                 branchName:targetBranchName
             }
             //本来はここでajax処理
-            this.items.unshift(inputData);
+            this.snackBar=true
+            this.items.unshift(inputData)
             this.selectedRowInfo.splice(0)
-            this.dialog= false;  
-            this.initDialog();          
+            this.dialog= false
+            this.initDialog()          
         },
         update(){
+            let place = this.items.indexOf(this.selectedRowInfo[0]);
+            let target = this.branchList.filter(item =>item.value ==this.selectedBranch)
+            let ss ;
+            if (target.length !=0){
+                ss = target[0]["text"]
+            }
+            let inputData = {
+                id: this.textId,
+                name: this.textName,
+                branchId:this.selectedBranch,
+                branchName:ss
+            }
+            if( place !=-1 ) {
+                this.items[place] = inputData
+            }
+            console.log(this.items)
+            this.snackBar=true
             this.dialog= false;  
         },
         //削除
@@ -340,6 +359,7 @@
             if( place !=-1 ) {
                 this.items.shift(place,1)
             }
+            this.snackBar=true
             this.selectedRowInfo.splice(0)
             this.selectedRow = false
             this.dialog= false;  
